@@ -1,0 +1,86 @@
+--- DyninstAPI-8.1.2/proccontrol/make.module.tmpl.orig	2013-06-07 19:29:38.000000000 +0200
++++ DyninstAPI-8.1.2/proccontrol/make.module.tmpl	2013-07-12 15:56:32.196971904 +0200
+@@ -94,4 +94,4 @@
+ LDFLAGS	+= -L../../elf/$(PLATFORM) -ldynElf
+ endif
+ 
+-LDFLAGS += ${EXTRA_LIBS}
++LDFLAGS += ${EXTRA_LIBS} -lpthread
+--- DyninstAPI-8.1.2/dwarf/make.module.tmpl.orig	2013-06-07 19:29:28.000000000 +0200
++++ DyninstAPI-8.1.2/dwarf/make.module.tmpl	2013-07-12 16:02:51.443622660 +0200
+@@ -32,7 +32,7 @@
+ 
+ LDFLAGS     += $(LIBDIR)
+ LD		= $(GXX)
+-LDFLAGS		+= -shared $(G_PTHREAD_LD)
++LDFLAGS		+= -shared $(G_PTHREAD_LD) -L../../elf/$(PLATFORM) -ldynElf -L../../common/$(PLATFORM) -ldyncommon
+ CFLAGS		+= 
+ CXXFLAGS	+=  $(G_PTHREAD)
+ TFLAGS		+= 
+--- DyninstAPI-8.1.2/elf/make.module.tmpl.orig	2013-06-07 19:29:34.000000000 +0200
++++ DyninstAPI-8.1.2/elf/make.module.tmpl	2013-07-12 16:04:12.173619270 +0200
+@@ -41,7 +41,7 @@
+ 
+ LDFLAGS     += $(LIBDIR)
+ LD		= $(GXX)
+-LDFLAGS		+= -shared $(G_PTHREAD_LD)
++LDFLAGS		+= -shared $(G_PTHREAD_LD) -L../../common/$(PLATFORM) -ldyncommon
+ CFLAGS		+= 
+ CXXFLAGS	+=  $(G_PTHREAD)
+ TFLAGS		+= 
+--- DyninstAPI-8.1.2/symlite/make.module.tmpl.orig	2013-06-07 19:29:40.000000000 +0200
++++ DyninstAPI-8.1.2/symlite/make.module.tmpl	2013-07-12 16:05:24.890282886 +0200
+@@ -43,7 +43,7 @@
+ 
+ LDFLAGS     += $(LIBDIR)
+ LD		= $(GXX)
+-LDFLAGS		+= -shared $(G_PTHREAD_LD)
++LDFLAGS		+= -shared $(G_PTHREAD_LD) -L../../common/$(PLATFORM) -ldyncommon
+ CFLAGS		+= 
+ CXXFLAGS	+=  $(G_PTHREAD)
+ TFLAGS		+= 
+--- DyninstAPI-8.1.2/stackwalk/make.module.tmpl.orig	2013-06-07 19:29:40.000000000 +0200
++++ DyninstAPI-8.1.2/stackwalk/make.module.tmpl	2013-07-12 16:07:28.643611026 +0200
+@@ -86,7 +86,7 @@
+ 	LDFLAGS += -L../../symlite/$(PLATFORM) -lsymLite
+ endif
+ 
+-LDFLAGS += -L../../proccontrol/$(PLATFORM) -lpcontrol
++LDFLAGS += -L../../proccontrol/$(PLATFORM) -lpcontrol -L../../symlite/$(PLATFORM) -lsymLite
+ 
+ IFLAGS       += -I../$(PLATFORM) -I../src -I../h -I../../proccontrol/h -I../../symtabAPI/h -I../../parseAPI/h -I../../instructionAPI/h
+ 
+--- DyninstAPI-8.1.2/dyninstAPI/make.module.tmpl.orig	2013-06-07 19:29:29.000000000 +0200
++++ DyninstAPI-8.1.2/dyninstAPI/make.module.tmpl	2013-07-12 16:08:30.446941764 +0200
+@@ -46,7 +46,7 @@
+ USES_DWARF_DEBUG = true
+ USES_LIBELF = true
+ 
+-LDFLAGS += -lpthread -lstackwalk -lpcontrol -lpatchAPI -lparseAPI -linstructionAPI -lsymtabAPI -ldynElf -ldynDwarf 
++LDFLAGS += -lpthread -lstackwalk -lpcontrol -lpatchAPI -lparseAPI -linstructionAPI -lsymtabAPI -ldynElf -ldynDwarf -ldyncommon
+ 
+ LDFLAGS     += -L../../common/$(PLATFORM) 
+ LDFLAGS     += -L../../elf/$(PLATFORM) 
+--- DyninstAPI-8.1.2/make.components.orig	2013-06-07 19:29:35.000000000 +0200
++++ DyninstAPI-8.1.2/make.components	2013-07-12 17:10:40.483451898 +0200
+@@ -2,9 +2,9 @@
+ Everything = dynutil common elf dwarf symlite symtabAPI instructionAPI parseAPI patchAPI proccontrol stackwalk dyninstAPI_RT dyninstAPI dynC_API
+ 
+ Common          = dynutil common
+-Dwarf           = ${Common} dwarf
++Dwarf           = ${Common} elf dwarf
+ Elf             = ${Common} elf
+-SymLite         = ${Elf} symlite
++SymLite         = ${Common} ${Elf} symlite
+ SymtabAPI       = ${Common} ${Elf} ${Dwarf} symtabAPI
+ InstructionAPI  = ${Common} instructionAPI
+ ParseAPI        = ${Common} ${SymtabAPI} ${SymLite} ${InstructionAPI} parseAPI
+@@ -14,7 +14,7 @@
+ DynC_API        = ${DyninstAPI} dynC_API
+ Dyner           = ${DyninstAPI} dyner
+ 
+-StackwalkerAPI  = ${ProcControlAPI}
++StackwalkerAPI  = ${ProcControlAPI} ${SymLite}
+ ifndef WITHOUT_PARSE_API
+ StackwalkerAPI += ${ParseAPI} ${InstructionAPI}
+ endif
