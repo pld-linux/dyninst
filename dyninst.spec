@@ -10,6 +10,7 @@ Source0:	http://www.paradyn.org/release%{version}/DyninstAPI-%{version}.tgz
 # Source0-md5:	8441fb98ea610c3ecd4367e2ceab05df
 Patch0:		%{name}-libname.patch
 Patch1:		%{name}-build-symlite.patch
+Patch2:		%{name}-x32.patch
 URL:		http://www.dyninst.org/dyninst
 # libiberty
 BuildRequires:	binutils-devel
@@ -23,7 +24,7 @@ BuildRequires:	libxml2-devel >= 2
 BuildRequires:	sed >= 4.0
 BuildRequires:	texlive-format-pdflatex
 Requires:	libdwarf >= 0.20130126
-ExclusiveArch:	%{ix86} %{x8664} ppc ppc64 aarch64
+ExclusiveArch:	%{ix86} %{x8664} x32 ppc ppc64 aarch64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -86,6 +87,7 @@ Dokumentacja do bibliotek dyninst.
 %setup -q -n DyninstAPI-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake . \

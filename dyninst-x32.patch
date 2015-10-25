@@ -1,0 +1,11 @@
+--- DyninstAPI-9.0.3/stackwalk/src/x86-swk.C.orig	2015-08-26 18:13:07.000000000 +0200
++++ DyninstAPI-9.0.3/stackwalk/src/x86-swk.C	2015-10-25 20:25:17.942073210 +0100
+@@ -61,7 +61,7 @@
+      sw_printf("%p%p\n", frame_pointer, &frame_pointer);
+   }
+ 
+-#if defined(arch_x86_64) && (defined(os_linux) || defined(os_freebsd))
++#if defined(arch_x86_64) && !defined(__ILP32__) && (defined(os_linux) || defined(os_freebsd))
+   __asm__("mov %%rbp, %0\n"
+ 	  : "=r"(frame_pointer));
+ #elif defined(os_linux) || defined(os_freebsd)
