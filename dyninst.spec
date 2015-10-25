@@ -1,29 +1,29 @@
 Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
-Version:	8.1.2
+Version:	9.0.3
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-#Source0Download: http://www.dyninst.org/downloads/dyninst-8.x
-Source0:	http://www.dyninst.org/sites/default/files/downloads/dyninst/%{version}/DyninstAPI-%{version}.tgz
-# Source0-md5:	bf03b33375afa66fe0efa46ce3f4b17a
+#Source0Download: http://www.dyninst.org/downloads/dyninst-9.x
+Source0:	http://www.paradyn.org/release%{version}/DyninstAPI-%{version}.tgz
+# Source0-md5:	8441fb98ea610c3ecd4367e2ceab05df
 Patch0:		%{name}-libname.patch
-Patch1:		%{name}-link.patch
+Patch1:		%{name}-build-symlite.patch
 URL:		http://www.dyninst.org/dyninst
-BuildRequires:	autoconf >= 2.63
+# libiberty
 BuildRequires:	binutils-devel
-BuildRequires:	boost-devel >= 1.42
+BuildRequires:	boost-devel >= 1.47
+BuildRequires:	cmake >= 2.6.4
 BuildRequires:	elfutils-devel
 BuildRequires:	flex
 BuildRequires:	libdwarf-devel >= 0.20130126
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libxml2-devel >= 2
-BuildRequires:	nasm
 BuildRequires:	sed >= 4.0
-BuildRequires:	tcl-devel >= 8.5
+BuildRequires:	texlive-format-pdflatex
 Requires:	libdwarf >= 0.20130126
-ExclusiveArch:	%{ix86} %{x8664} ppc ppc64
+ExclusiveArch:	%{ix86} %{x8664} ppc ppc64 aarch64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -51,6 +51,7 @@ Summary:	Header files for dyninst libraries
 Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek dyninst
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libstdc++-devel >= 6:4.7
 
 %description devel
 Header files for dyninst libraries.
@@ -70,20 +71,30 @@ Static dyninst libraries.
 %description static -l pl.UTF-8
 Statyczne biblioteki dyninst.
 
+%package doc
+Summary:	Documentation for dyninst libraries
+Summary(pl.UTF-8):	Dokumentacja do bibliotek dyninst
+Group:		Documentation
+
+%description doc
+Documentation for dyninst libraries.
+
+%description doc -l pl.UTF-8
+Dokumentacja do bibliotek dyninst.
+
 %prep
 %setup -q -n DyninstAPI-%{version}
 %patch0 -p1
 %patch1 -p1
 
-%{__sed} -i -e 's/tcl8\.4/tcl8.5/' configure.in
-
 %build
-%{__autoconf}
-%configure \
-	--includedir=%{_includedir}/dyninst
+%cmake . \
+	-DINSTALL_CMAKE_DIR:PATH=%{_libdir}/cmake/Dyninst \
+	-DINSTALL_DOC_DIR:PATH=%{_docdir}/dyninst \
+	-DINSTALL_INCLUDE_DIR:PATH=%{_includedir}/dyninst \
+	-DINSTALL_LIB_DIR:PATH=%{_libdir} \
 
-%{__make} \
-	VERBOSE_COMPILATION=1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -100,33 +111,36 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc COPYRIGHT ChangeLog README
+%attr(755,root,root) %{_libdir}/libdynC_API.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libdynC_API.so.9.0
 %attr(755,root,root) %{_libdir}/libdynDwarf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynDwarf.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libdynDwarf.so.9.0
 %attr(755,root,root) %{_libdir}/libdynElf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynElf.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libdynElf.so.9.0
 %attr(755,root,root) %{_libdir}/libdyncommon.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyncommon.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libdyncommon.so.9.0
 %attr(755,root,root) %{_libdir}/libdyninstAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI.so.9.0
 %attr(755,root,root) %{_libdir}/libdyninstAPI_RT.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI_RT.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI_RT.so.9.0
 %attr(755,root,root) %{_libdir}/libinstructionAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libinstructionAPI.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libinstructionAPI.so.9.0
 %attr(755,root,root) %{_libdir}/libparseAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libparseAPI.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libparseAPI.so.9.0
 %attr(755,root,root) %{_libdir}/libpatchAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpatchAPI.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libpatchAPI.so.9.0
 %attr(755,root,root) %{_libdir}/libpcontrol.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpcontrol.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libpcontrol.so.9.0
 %attr(755,root,root) %{_libdir}/libstackwalk.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libstackwalk.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libstackwalk.so.9.0
 %attr(755,root,root) %{_libdir}/libsymLite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsymLite.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libsymLite.so.9.0
 %attr(755,root,root) %{_libdir}/libsymtabAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsymtabAPI.so.8.1
+%attr(755,root,root) %ghost %{_libdir}/libsymtabAPI.so.9.0
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libdynC_API.so
 %attr(755,root,root) %{_libdir}/libdynDwarf.so
 %attr(755,root,root) %{_libdir}/libdynElf.so
 %attr(755,root,root) %{_libdir}/libdyncommon.so
@@ -140,7 +154,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libsymLite.so
 %attr(755,root,root) %{_libdir}/libsymtabAPI.so
 %{_includedir}/dyninst
+%{_libdir}/cmake/Dyninst
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libdyninstAPI_RT.a
+%{_libdir}/libsymLite.a
+
+%files doc
+%defattr(644,root,root,755)
+%{_docdir}/dyninst
