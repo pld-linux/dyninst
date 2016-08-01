@@ -1,10 +1,10 @@
---- DyninstAPI-9.0.3/common/CMakeLists.txt.orig	2015-08-26 18:13:07.000000000 +0200
-+++ DyninstAPI-9.0.3/common/CMakeLists.txt	2015-10-25 08:20:06.636787299 +0100
+--- dyninst-9.2.0/common/CMakeLists.txt.orig	2016-08-01 18:54:27.138427786 +0200
++++ dyninst-9.2.0/common/CMakeLists.txt	2016-08-01 18:56:45.575092871 +0200
 @@ -112,6 +112,7 @@
  endif()
  
  dyninst_library(common ${DEPS})
 +set_target_properties(common PROPERTIES OUTPUT_NAME dyncommon)
- 
- if(PLATFORM MATCHES nt OR PLATFORM MATCHES windows)
-   target_link_libraries(common Psapi WS2_32 dbghelp)
+ if (UNIX)
+   # Boost auto-links on Windows; don't double-link
+   target_link_private_libraries(common ${Boost_LIBRARIES})
