@@ -1,10 +1,11 @@
---- dyninst-9.3.1/common/CMakeLists.txt.orig	2017-04-09 19:23:42.065823975 +0200
-+++ dyninst-9.3.1/common/CMakeLists.txt	2017-04-09 19:28:45.709153841 +0200
-@@ -112,6 +112,7 @@
+diff -ur dyninst-10.1.0.orig/common/CMakeLists.txt dyninst-10.1.0/common/CMakeLists.txt
+--- dyninst-10.1.0.orig/common/CMakeLists.txt	2019-05-16 20:40:05.000000000 +0200
++++ dyninst-10.1.0/common/CMakeLists.txt	2019-08-28 20:22:16.367000000 +0200
+@@ -111,6 +111,7 @@
  
  
  dyninst_library(common ${DEPS})
 +set_target_properties(common PROPERTIES OUTPUT_NAME dyncommon)
- if(PLATFORM MATCHES nt OR PLATFORM MATCHES windows)
-   target_link_private_libraries(common Psapi WS2_32 dbghelp)
+ if(TARGET TBB)
+     add_dependencies(common TBB)
  endif()

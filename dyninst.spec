@@ -1,18 +1,16 @@
 Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
-Version:	9.3.2
-Release:	2
+Version:	10.1.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 # http://www.dyninst.org/downloads/dyninst-9.x
 #Source0Download: https://github.com/dyninst/dyninst/releases
 Source0:	https://github.com/dyninst/dyninst/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	a2bf03b6d1d424853e80d39b13e9c229
+# Source0-md5:	3711fca820ceb8e76d5b026964c5029d
 Patch0:		%{name}-libname.patch
 Patch1:		%{name}-x32.patch
-Patch2:		%{name}-types.patch
-Patch3:		boost-1.69.patch
 URL:		http://www.dyninst.org/dyninst
 # libiberty
 BuildRequires:	binutils-devel
@@ -89,8 +87,6 @@ Dokumentacja do bibliotek dyninst.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %cmake . \
@@ -116,33 +112,39 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc COPYRIGHT CHANGELOG.md README.md
+%attr(755,root,root) %{_bindir}/cfg_to_dot
+%attr(755,root,root) %{_bindir}/codeCoverage
+%attr(755,root,root) %{_bindir}/ddb.db
+%attr(755,root,root) %{_bindir}/params.db
 %attr(755,root,root) %{_bindir}/parseThat
+%attr(755,root,root) %{_bindir}/unistd.db
+%attr(755,root,root) %{_bindir}/unstrip
 %attr(755,root,root) %{_libdir}/libdynC_API.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynC_API.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libdynC_API.so.10.1
 %attr(755,root,root) %{_libdir}/libdynDwarf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynDwarf.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libdynDwarf.so.10.1
 %attr(755,root,root) %{_libdir}/libdynElf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynElf.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libdynElf.so.10.1
 %attr(755,root,root) %{_libdir}/libdyncommon.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyncommon.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libdyncommon.so.10.1
 %attr(755,root,root) %{_libdir}/libdyninstAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI.so.10.1
 %attr(755,root,root) %{_libdir}/libdyninstAPI_RT.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI_RT.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI_RT.so.10.1
 %attr(755,root,root) %{_libdir}/libinstructionAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libinstructionAPI.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libinstructionAPI.so.10.1
 %attr(755,root,root) %{_libdir}/libparseAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libparseAPI.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libparseAPI.so.10.1
 %attr(755,root,root) %{_libdir}/libpatchAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpatchAPI.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libpatchAPI.so.10.1
 %attr(755,root,root) %{_libdir}/libpcontrol.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpcontrol.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libpcontrol.so.10.1
 %attr(755,root,root) %{_libdir}/libstackwalk.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libstackwalk.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libstackwalk.so.10.1
 %attr(755,root,root) %{_libdir}/libsymLite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsymLite.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libsymLite.so.10.1
 %attr(755,root,root) %{_libdir}/libsymtabAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsymtabAPI.so.9.3
+%attr(755,root,root) %ghost %{_libdir}/libsymtabAPI.so.10.1
 
 %files devel
 %defattr(644,root,root,755)
@@ -152,6 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libdyncommon.so
 %attr(755,root,root) %{_libdir}/libdyninstAPI.so
 %attr(755,root,root) %{_libdir}/libdyninstAPI_RT.so
+%attr(755,root,root) %{_libdir}/libInst.so
 %attr(755,root,root) %{_libdir}/libinstructionAPI.so
 %attr(755,root,root) %{_libdir}/libparseAPI.so
 %attr(755,root,root) %{_libdir}/libpatchAPI.so
