@@ -112,13 +112,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc COPYRIGHT CHANGELOG.md README.md
-%attr(755,root,root) %{_bindir}/cfg_to_dot
 %attr(755,root,root) %{_bindir}/codeCoverage
-%attr(755,root,root) %{_bindir}/ddb.db
-%attr(755,root,root) %{_bindir}/params.db
 %attr(755,root,root) %{_bindir}/parseThat
-%attr(755,root,root) %{_bindir}/unistd.db
-%attr(755,root,root) %{_bindir}/unstrip
 %attr(755,root,root) %{_libdir}/libdynC_API.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libdynC_API.so.10.1
 %attr(755,root,root) %{_libdir}/libdynDwarf.so.*.*.*
