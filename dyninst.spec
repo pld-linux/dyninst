@@ -103,6 +103,12 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# File from examples subdir
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/cfg_to_dot
+# Not used binary and non-binary .db files
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/unstrip
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/*.db
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
