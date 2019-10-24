@@ -1,0 +1,40 @@
+--- dyninst-10.1.0/instructionAPI/h/Result.h.orig	2019-05-16 20:40:05.000000000 +0200
++++ dyninst-10.1.0/instructionAPI/h/Result.h	2019-10-24 09:20:07.516588065 +0200
+@@ -449,10 +449,18 @@
+ 	    snprintf(hex, 20, "%x", val.s32val);
+ 	    break;
+ 	  case u64:
++#if defined(arch_x86) || defined(__ILP32__)
++	    snprintf(hex, 20, "%llx", val.u64val);
++#else
+ 	    snprintf(hex, 20, "%lx", val.u64val);
++#endif
+ 	    break;
+ 	  case s64:
++#if defined(arch_x86) || defined(__ILP32__)
++	    snprintf(hex, 20, "%llx", val.s64val);
++#else
+ 	    snprintf(hex, 20, "%lx", val.s64val);
++#endif
+ 	    break;
+ 	  case sp_float:
+ 	    snprintf(hex, 20, "%f", val.floatval);
+@@ -464,10 +472,18 @@
+ 	    snprintf(hex, 20, "%x", val.bitval);
+ 	    break;
+ 	  case u48:
++#if defined(arch_x86) || defined(__ILP32__)
++	    snprintf(hex, 20, "%llx", val.s48val);
++#else
+ 	    snprintf(hex, 20, "%lx", val.s48val);
++#endif
+ 	    break;
+ 	  case s48:
++#if defined(arch_x86) || defined(__ILP32__)
++	    snprintf(hex, 20, "%llx", val.s48val);
++#else
+ 	    snprintf(hex, 20, "%lx", val.s48val);
++#endif
+ 	    break;
+      case m512:
+ 	    snprintf(hex, 20, "%p", val.m512val);

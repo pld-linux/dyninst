@@ -2,7 +2,7 @@ Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
 Version:	10.1.0
-Release:	2
+Release:	3
 License:	LGPL v2.1+
 Group:		Libraries
 # http://www.dyninst.org/downloads/dyninst-9.x
@@ -11,6 +11,7 @@ Source0:	https://github.com/dyninst/dyninst/archive/v%{version}/%{name}-%{versio
 # Source0-md5:	3711fca820ceb8e76d5b026964c5029d
 Patch0:		%{name}-libname.patch
 Patch1:		%{name}-x32.patch
+Patch2:		format-size.patch
 URL:		http://www.dyninst.org/dyninst
 # libiberty
 BuildRequires:	binutils-devel
@@ -87,6 +88,7 @@ Dokumentacja do bibliotek dyninst.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake . \
