@@ -4,14 +4,14 @@
  	    snprintf(hex, 20, "%x", val.s32val);
  	    break;
  	  case u64:
-+#if defined(arch_x86) || defined(__ILP32__)
++#if defined(__i386__) || defined(__ILP32__)
 +	    snprintf(hex, 20, "%llx", val.u64val);
 +#else
  	    snprintf(hex, 20, "%lx", val.u64val);
 +#endif
  	    break;
  	  case s64:
-+#if defined(arch_x86) || defined(__ILP32__)
++#if defined(__i386__) || defined(__ILP32__)
 +	    snprintf(hex, 20, "%llx", val.s64val);
 +#else
  	    snprintf(hex, 20, "%lx", val.s64val);
@@ -23,14 +23,14 @@
  	    snprintf(hex, 20, "%x", val.bitval);
  	    break;
  	  case u48:
-+#if defined(arch_x86) || defined(__ILP32__)
++#if defined(__i386__) || defined(__ILP32__)
 +	    snprintf(hex, 20, "%llx", val.s48val);
 +#else
  	    snprintf(hex, 20, "%lx", val.s48val);
 +#endif
  	    break;
  	  case s48:
-+#if defined(arch_x86) || defined(__ILP32__)
++#if defined(__i386__) || defined(__ILP32__)
 +	    snprintf(hex, 20, "%llx", val.s48val);
 +#else
  	    snprintf(hex, 20, "%lx", val.s48val);

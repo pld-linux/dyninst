@@ -2,7 +2,7 @@ Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
 Version:	10.1.0
-Release:	3
+Release:	4
 License:	LGPL v2.1+
 Group:		Libraries
 # http://www.dyninst.org/downloads/dyninst-9.x
