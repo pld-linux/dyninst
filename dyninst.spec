@@ -15,16 +15,17 @@ Patch2:		format-size.patch
 URL:		http://www.dyninst.org/dyninst
 # libiberty
 BuildRequires:	binutils-devel
-BuildRequires:	boost-devel >= 1.47
-BuildRequires:	cmake >= 2.6.4
-BuildRequires:	elfutils-devel
+BuildRequires:	boost-devel >= 1.61.0
+BuildRequires:	cmake >= 3.4.0
+BuildRequires:	elfutils-devel >= 0.173
 BuildRequires:	flex
-BuildRequires:	libdwarf-devel >= 0.20130126
+BuildRequires:	libgomp-devel
 BuildRequires:	libstdc++-devel >= 6:4.7
-BuildRequires:	libxml2-devel >= 2
 BuildRequires:	sed >= 4.0
+BuildRequires:	tbb-devel >= 2018.6
 BuildRequires:	texlive-format-pdflatex
-Requires:	libdwarf >= 0.20130126
+Requires:	elfutils >= 0.173
+Requires:	tbb >= 2018.6
 ExclusiveArch:	%{ix86} %{x8664} x32 aarch64 ppc ppc64 aarch64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
