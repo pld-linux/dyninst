@@ -5,14 +5,13 @@ Version:	10.1.0
 Release:	4
 License:	LGPL v2.1+
 Group:		Libraries
-# http://www.dyninst.org/downloads/dyninst-9.x
 #Source0Download: https://github.com/dyninst/dyninst/releases
 Source0:	https://github.com/dyninst/dyninst/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	3711fca820ceb8e76d5b026964c5029d
 Patch0:		%{name}-libname.patch
 Patch1:		%{name}-x32.patch
 Patch2:		format-size.patch
-URL:		http://www.dyninst.org/dyninst
+URL:		https://dyninst.org/dyninst
 # libiberty
 BuildRequires:	binutils-devel
 BuildRequires:	boost-devel >= 1.61.0
