@@ -1,29 +1,30 @@
 Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
-Version:	10.1.0
-Release:	6
+Version:	12.0.1
+Release:	0.1
 License:	LGPL v2.1+
 Group:		Libraries
 #Source0Download: https://github.com/dyninst/dyninst/releases
 Source0:	https://github.com/dyninst/dyninst/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	3711fca820ceb8e76d5b026964c5029d
+# Source0-md5:	a64cd16ed2c364e892fd46b243414833
 Patch0:		%{name}-libname.patch
 Patch1:		%{name}-x32.patch
-Patch2:		format-size.patch
+Patch2:		%{name}-tbb.patch
 URL:		https://dyninst.org/dyninst
 # libiberty
 BuildRequires:	binutils-devel
 BuildRequires:	boost-devel >= 1.61.0
 BuildRequires:	cmake >= 3.4.0
-BuildRequires:	elfutils-devel >= 0.173
+BuildRequires:	elfutils-devel >= 0.186
 BuildRequires:	flex
 BuildRequires:	libgomp-devel
 BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	sed >= 4.0
 BuildRequires:	tbb-devel >= 2018.6
 BuildRequires:	texlive-format-pdflatex
-Requires:	elfutils >= 0.173
+Requires:	elfutils >= 0.186
 Requires:	tbb >= 2018.6
 ExclusiveArch:	%{ix86} %{x8664} x32 aarch64 ppc ppc64 aarch64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
