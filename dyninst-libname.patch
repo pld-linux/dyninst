@@ -1,11 +1,10 @@
-diff -ur dyninst-10.1.0.orig/common/CMakeLists.txt dyninst-10.1.0/common/CMakeLists.txt
---- dyninst-10.1.0.orig/common/CMakeLists.txt	2019-05-16 20:40:05.000000000 +0200
-+++ dyninst-10.1.0/common/CMakeLists.txt	2019-08-28 20:22:16.367000000 +0200
-@@ -111,6 +111,7 @@
- ADD_DEFINITIONS(-DCOMMON_LIB)
+--- dyninst-12.2.0/common/CMakeLists.txt.orig	2022-08-22 21:01:05.719446769 +0200
++++ dyninst-12.2.0/common/CMakeLists.txt	2022-08-23 05:32:43.279810477 +0200
+@@ -103,6 +103,7 @@ endif()
+ add_definitions(-DCOMMON_LIB)
  
  dyninst_library(common)
 +set_target_properties(common PROPERTIES OUTPUT_NAME dyncommon)
  
  if(TARGET LibIberty)
-   add_dependencies(common LibIberty)
+     add_dependencies(common LibIberty)
