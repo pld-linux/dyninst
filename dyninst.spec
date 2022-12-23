@@ -1,10 +1,8 @@
-# TODO: fix common lib, it's installed as dyncommon but referenced as -lcommon in cmake
-#
 Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
 Version:	12.2.1
-Release:	0.1
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 #Source0Download: https://github.com/dyninst/dyninst/releases
