@@ -11,6 +11,7 @@ Source0:	https://github.com/dyninst/dyninst/archive/v%{version}/%{name}-%{versio
 Patch0:		%{name}-libname.patch
 Patch1:		%{name}-x32.patch
 Patch2:		%{name}-tbb.patch
+Patch3:		missing-includes.patch
 URL:		https://dyninst.org/dyninst
 # libiberty
 BuildRequires:	binutils-devel
@@ -81,6 +82,7 @@ Statyczne biblioteki dyninst.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export CXXFLAGS="%{rpmcxxflags} -DTBB_DEFINE_STD_HASH_SPECIALIZATIONS"
