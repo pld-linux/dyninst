@@ -1,13 +1,13 @@
 Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
-Version:	12.2.1
-Release:	2
+Version:	12.3.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 #Source0Download: https://github.com/dyninst/dyninst/releases
 Source0:	https://github.com/dyninst/dyninst/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	800b6562ab99d285cdac51ad273eeee1
+# Source0-md5:	c3a6fc1fc59bb26472f918d4cb797f11
 Patch0:		%{name}-libname.patch
 Patch1:		%{name}-x32.patch
 Patch2:		%{name}-tbb.patch
@@ -113,31 +113,31 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYRIGHT CHANGELOG.md README.md
 %attr(755,root,root) %{_bindir}/parseThat
 %attr(755,root,root) %{_libdir}/libdynC_API.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynC_API.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libdynC_API.so.12.3
 %attr(755,root,root) %{_libdir}/libdynDwarf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynDwarf.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libdynDwarf.so.12.3
 %attr(755,root,root) %{_libdir}/libdynElf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynElf.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libdynElf.so.12.3
 %attr(755,root,root) %{_libdir}/libdyncommon.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyncommon.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libdyncommon.so.12.3
 %attr(755,root,root) %{_libdir}/libdyninstAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI.so.12.3
 %attr(755,root,root) %{_libdir}/libdyninstAPI_RT.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI_RT.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI_RT.so.12.3
 %attr(755,root,root) %{_libdir}/libinstructionAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libinstructionAPI.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libinstructionAPI.so.12.3
 %attr(755,root,root) %{_libdir}/libparseAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libparseAPI.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libparseAPI.so.12.3
 %attr(755,root,root) %{_libdir}/libpatchAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpatchAPI.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libpatchAPI.so.12.3
 %attr(755,root,root) %{_libdir}/libpcontrol.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpcontrol.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libpcontrol.so.12.3
 %attr(755,root,root) %{_libdir}/libstackwalk.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libstackwalk.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libstackwalk.so.12.3
 %attr(755,root,root) %{_libdir}/libsymLite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsymLite.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libsymLite.so.12.3
 %attr(755,root,root) %{_libdir}/libsymtabAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsymtabAPI.so.12.2
+%attr(755,root,root) %ghost %{_libdir}/libsymtabAPI.so.12.3
 
 %files devel
 %defattr(644,root,root,755)

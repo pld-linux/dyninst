@@ -1,15 +1,3 @@
-diff -ur dyninst-12.2.1.orig/dataflowAPI/src/AbslocInterface.C dyninst-12.2.1/dataflowAPI/src/AbslocInterface.C
---- dyninst-12.2.1.orig/dataflowAPI/src/AbslocInterface.C	2022-11-21 20:46:38.000000000 +0100
-+++ dyninst-12.2.1/dataflowAPI/src/AbslocInterface.C	2023-02-19 21:34:34.799852999 +0100
-@@ -45,6 +45,8 @@
- #include "parseAPI/h/CFG.h"
- #include "parseAPI/h/CodeObject.h"
- 
-+#include <deque>
-+
- using namespace Dyninst;
- using namespace Dyninst::InstructionAPI;
- extern int df_debug_stackanalysis;
 diff -ur dyninst-12.2.1.orig/instructionAPI/src/AMDGPU/cdna2/InstructionDecoder-amdgpu-cdna2.h dyninst-12.2.1/instructionAPI/src/AMDGPU/cdna2/InstructionDecoder-amdgpu-cdna2.h
 --- dyninst-12.2.1.orig/instructionAPI/src/AMDGPU/cdna2/InstructionDecoder-amdgpu-cdna2.h	2022-11-21 20:46:38.000000000 +0100
 +++ dyninst-12.2.1/instructionAPI/src/AMDGPU/cdna2/InstructionDecoder-amdgpu-cdna2.h	2023-02-19 21:33:54.774376195 +0100
@@ -36,14 +24,12 @@ diff -ur dyninst-12.2.1.orig/instructionAPI/src/AMDGPU/vega/InstructionDecoder-a
  namespace Dyninst {
      namespace InstructionAPI {
  
-diff -ur dyninst-12.2.1.orig/instructionAPI/src/InstructionDecoder-aarch64.h dyninst-12.2.1/instructionAPI/src/InstructionDecoder-aarch64.h
---- dyninst-12.2.1.orig/instructionAPI/src/InstructionDecoder-aarch64.h	2022-11-21 20:46:38.000000000 +0100
-+++ dyninst-12.2.1/instructionAPI/src/InstructionDecoder-aarch64.h	2023-02-19 21:33:39.774822043 +0100
-@@ -33,6 +33,9 @@
+--- dyninst-12.3.0.orig/instructionAPI/src/InstructionDecoder-aarch64.h	2022-11-21 20:46:38.000000000 +0100
++++ dyninst-12.3.0/instructionAPI/src/InstructionDecoder-aarch64.h	2023-02-19 21:33:39.774822043 +0100
+@@ -33,6 +33,8 @@
  #include "Immediate.h"
  #include "dyn_regs.h"
  
-+#include <array>
 +#include <string>
 +
  namespace Dyninst {
