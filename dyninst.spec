@@ -2,7 +2,7 @@ Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
 Version:	12.3.0
-Release:	2
+Release:	3
 License:	LGPL v2.1+
 Group:		Libraries
 #Source0Download: https://github.com/dyninst/dyninst/releases
@@ -58,6 +58,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek dyninst
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	libstdc++-devel >= 6:4.7
+Requires:	tbb-devel >= 2021.4
 
 %description devel
 Header files for dyninst libraries.
