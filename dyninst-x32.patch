@@ -9,3 +9,14 @@
    __asm__("mov %%rbp, %0\n"
  	  : "=r"(frame_pointer));
  #elif defined(os_linux) || defined(os_freebsd)
+--- dyninst-12.3.0/scripts/sysname~	2023-02-22 22:39:56.000000000 +0100
++++ dyninst-12.3.0/scripts/sysname	2024-12-18 23:38:23.746358396 +0100
+@@ -344,6 +344,8 @@
+ 	  echo "${UNAME_MACHINE}-unknown-linuxcoff" ; exit 0
+ 	elif echo $ld_help_string | grep >/dev/null 2>&1 "supported emulations: elf64_ia64"; then
+ 	  echo "${UNAME_MACHINE}-unknown-linux" ; exit 0
++	elif echo $ld_help_string | grep >/dev/null 2>&1 "supported emulations: elf32_x86_64"; then
++	  echo "${UNAME_MACHINE}-unknown-linux" ; exit 0
+ 	elif echo $ld_help_string | grep >/dev/null 2>&1 "supported emulations: elf_x86_64"; then
+ 	  echo "${UNAME_MACHINE}-unknown-linux" ; exit 0
+ 	elif test "${UNAME_MACHINE}" = "alpha" ; then
