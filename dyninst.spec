@@ -1,26 +1,26 @@
 Summary:	API for Run-time Code Generation
 Summary(pl.UTF-8):	API do generowania kodu w czasie działania
 Name:		dyninst
-Version:	12.3.0
-Release:	5
+Version:	13.0.0
+Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 #Source0Download: https://github.com/dyninst/dyninst/releases
 Source0:	https://github.com/dyninst/dyninst/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c3a6fc1fc59bb26472f918d4cb797f11
+# Source0-md5:	e594b64007d63f641cda3eef97e94b50
 Patch0:		%{name}-libname.patch
 Patch1:		%{name}-x32.patch
-Patch2:		%{name}-tbb.patch
-Patch3:		missing-includes.patch
+Patch2:		%{name}-x86.patch
+Patch3:		%{name}-install.patch
 URL:		https://dyninst.org/dyninst
 # libiberty
 BuildRequires:	binutils-devel
-BuildRequires:	boost-devel >= 1.70.0
-BuildRequires:	cmake >= 3.4.0
+BuildRequires:	boost-devel >= 1.71.0
+BuildRequires:	cmake >= 3.14.0
 BuildRequires:	elfutils-devel >= 0.186
 BuildRequires:	flex
 BuildRequires:	libgomp-devel
-BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	libstdc++-devel >= 6:6.0
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	sed >= 4.0
 BuildRequires:	tbb-devel >= 2021.4
@@ -30,7 +30,8 @@ Obsoletes:	dyninst-doc < 12.2
 ExclusiveArch:	%{ix86} %{x8664} x32 aarch64 ppc ppc64 aarch64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		skip_post_check_so	 libparseAPI\.so.*
+%define		abiver			13.0
+%define		skip_post_check_so	libparseAPI\.so.*
 
 %description
 Dyninst is an Application Program Interface (API) to permit the
@@ -57,7 +58,9 @@ Summary:	Header files for dyninst libraries
 Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek dyninst
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	libstdc++-devel >= 6:4.7
+Requires:	boost-devel >= 1.71.0
+Requires:	elfutils-devel >= 0.186
+Requires:	libstdc++-devel >= 6:6.0
 Requires:	tbb-devel >= 2021.4
 
 %description devel
@@ -87,15 +90,13 @@ Statyczne biblioteki dyninst.
 
 %build
 export CXXFLAGS="%{rpmcxxflags} -DTBB_DEFINE_STD_HASH_SPECIALIZATIONS"
-install -d build
-cd build
-%cmake .. \
-	-DINSTALL_CMAKE_DIR:PATH=%{_libdir}/cmake/Dyninst \
-	-DINSTALL_DOC_DIR:PATH=%{_docdir}/dyninst \
-	-DINSTALL_INCLUDE_DIR:PATH=%{_includedir}/dyninst \
-	-DINSTALL_LIB_DIR:PATH=%{_libdir} \
+%cmake -B build \
+	-DCMAKE_INSTALL_INCLUDEDIR:PATH=include/dyninst \
+	-DENABLE_DEBUGINFOD=ON
 
-%{__make}
+# -DLIGHTWEIGHT_SYMTAB enabled libsymLite and disables libdyninstAPI
+
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -114,47 +115,44 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYRIGHT CHANGELOG.md README.md
 %attr(755,root,root) %{_bindir}/parseThat
 %attr(755,root,root) %{_libdir}/libdynC_API.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynC_API.so.12.3
+%ghost %{_libdir}/libdynC_API.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libdynDwarf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynDwarf.so.12.3
+%ghost %{_libdir}/libdynDwarf.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libdynElf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdynElf.so.12.3
+%ghost %{_libdir}/libdynElf.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libdyncommon.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyncommon.so.12.3
+%ghost %{_libdir}/libdyncommon.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libdyninstAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI.so.12.3
+%ghost %{_libdir}/libdyninstAPI.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libdyninstAPI_RT.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libdyninstAPI_RT.so.12.3
+%ghost %{_libdir}/libdyninstAPI_RT.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libinstructionAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libinstructionAPI.so.12.3
+%ghost %{_libdir}/libinstructionAPI.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libparseAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libparseAPI.so.12.3
+%ghost %{_libdir}/libparseAPI.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libpatchAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpatchAPI.so.12.3
+%ghost %{_libdir}/libpatchAPI.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libpcontrol.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libpcontrol.so.12.3
+%ghost %{_libdir}/libpcontrol.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libstackwalk.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libstackwalk.so.12.3
-%attr(755,root,root) %{_libdir}/libsymLite.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsymLite.so.12.3
+%ghost %{_libdir}/libstackwalk.so.%{abiver}
 %attr(755,root,root) %{_libdir}/libsymtabAPI.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsymtabAPI.so.12.3
+%ghost %{_libdir}/libsymtabAPI.so.%{abiver}
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libdynC_API.so
-%attr(755,root,root) %{_libdir}/libdynDwarf.so
-%attr(755,root,root) %{_libdir}/libdynElf.so
-%attr(755,root,root) %{_libdir}/libdyncommon.so
-%attr(755,root,root) %{_libdir}/libdyninstAPI.so
-%attr(755,root,root) %{_libdir}/libdyninstAPI_RT.so
-%attr(755,root,root) %{_libdir}/libinstructionAPI.so
-%attr(755,root,root) %{_libdir}/libparseAPI.so
-%attr(755,root,root) %{_libdir}/libpatchAPI.so
-%attr(755,root,root) %{_libdir}/libpcontrol.so
-%attr(755,root,root) %{_libdir}/libstackwalk.so
-%attr(755,root,root) %{_libdir}/libsymLite.so
-%attr(755,root,root) %{_libdir}/libsymtabAPI.so
+%{_libdir}/libdynC_API.so
+%{_libdir}/libdynDwarf.so
+%{_libdir}/libdynElf.so
+%{_libdir}/libdyncommon.so
+%{_libdir}/libdyninstAPI.so
+%{_libdir}/libdyninstAPI_RT.so
+%{_libdir}/libinstructionAPI.so
+%{_libdir}/libparseAPI.so
+%{_libdir}/libpatchAPI.so
+%{_libdir}/libpcontrol.so
+%{_libdir}/libstackwalk.so
+%{_libdir}/libsymtabAPI.so
 %{_includedir}/dyninst
 %{_libdir}/cmake/Dyninst
 

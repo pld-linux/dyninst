@@ -1,0 +1,10 @@
+--- dyninst-13.0.0/cmake/DyninstPlatform.cmake.orig	2024-03-01 00:12:39.000000000 +0100
++++ dyninst-13.0.0/cmake/DyninstPlatform.cmake	2025-08-12 20:46:53.688030762 +0200
+@@ -10,6 +10,7 @@ endif()
+ 
+ # Equivalent to CMAKE_HOST_SYSTEM_PROCESSOR and `uname -m` on Unixes
+ cmake_host_system_information(RESULT _host_arch QUERY OS_PLATFORM)
++string(REGEX REPLACE "i[456]86" "i386" _host_arch ${_host_arch})
+ 
+ set(_known_arches "x86_64" "ppc64le" "aarch64" "i386" "amd64")
+ if(NOT ${_host_arch} IN_LIST _known_arches)

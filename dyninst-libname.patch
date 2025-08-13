@@ -1,10 +1,10 @@
---- dyninst-12.2.0/common/CMakeLists.txt.orig	2022-08-22 21:01:05.719446769 +0200
-+++ dyninst-12.2.0/common/CMakeLists.txt	2022-08-23 05:32:43.279810477 +0200
-@@ -103,6 +103,7 @@ endif()
- add_definitions(-DCOMMON_LIB)
- 
- dyninst_library(common)
+--- dyninst-13.0.0/common/CMakeLists.txt.orig	2024-03-01 00:12:39.000000000 +0100
++++ dyninst-13.0.0/common/CMakeLists.txt	2025-08-12 19:40:59.318316405 +0200
+@@ -168,6 +168,7 @@ dyninst_library(
+   PUBLIC_DEPS Dyninst::TBB Dyninst::Boost
+   PRIVATE_DEPS Dyninst::LibIberty OpenMP::OpenMP_CXX Dyninst::Valgrind Threads::Threads
+ )
 +set_target_properties(common PROPERTIES OUTPUT_NAME dyncommon)
+ # cmake-format: on
  
- if(TARGET LibIberty)
-     add_dependencies(common LibIberty)
+ if(DYNINST_OS_Windows)
